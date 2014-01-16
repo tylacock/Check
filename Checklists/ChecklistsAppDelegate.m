@@ -2,8 +2,7 @@
 //  ChecklistsAppDelegate.m
 //  Checklists
 //
-//  Created by Matthijs on 30-09-13.
-//  Copyright (c) 2013 Razeware LLC. All rights reserved.
+//  Created by Lacock, Ty on 1/16/14.
 //
 
 #import "ChecklistsAppDelegate.h"
