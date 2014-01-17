@@ -5,14 +5,14 @@
 //  Created by Lacock, Ty on 1/16/14.
 //
 
-#import "ChecklistsViewController.h"
+#import "ChecklistViewController.h"
 #import "ChecklistItem.h"
 
-@interface ChecklistsViewController ()
+@interface ChecklistViewController ()
 
 @end
 
-@implementation ChecklistsViewController
+@implementation ChecklistViewController
 {
   NSMutableArray *_items;
 }
