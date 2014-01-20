@@ -7,9 +7,13 @@
 //
 
 #import "AllListsViewController.h"
+#import "Checklist.h"
+#import "ChecklistViewController.h"
 
 @interface AllListsViewController ()
-
+{
+    NSMutableArray *_lists;
+}
 @end
 
 @implementation AllListsViewController
@@ -17,15 +21,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma mark -  Life Cycle
 ///////////////////////////////////////////////////////////////////////////////
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -44,6 +39,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if ((self = [super initWithCoder:aDecoder])) {
+        _lists = [[NSMutableArray alloc] initWithCapacity:20];
+        
+        Checklist *list;
+        
+        list = [Checklist new];
+        list.name = @"Birthdays";
+        [_lists addObject:list];
+        
+        list = [Checklist new];
+        list.name = @"Groceries";
+        [_lists addObject:list];
+        
+        list = [Checklist new];
+        list.name = @"Cool stuff";
+        [_lists addObject:list];
+        
+        list = [Checklist new];
+        list.name = @"Dog things";
+        [_lists addObject:list];
+    }
+    
+    return self;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 #pragma mark -  Table View and Data Source
 ///////////////////////////////////////////////////////////////////////////////
@@ -55,7 +76,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return [_lists count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -70,12 +91,26 @@
     }
     
     cell.textLabel.text = [NSString stringWithFormat:@"List %ld", (long)indexPath.row];
+    
+    Checklist *checklist = _lists[indexPath.row];
+    cell.textLabel.text = checklist.name;
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
     return cell;
     
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"ShowChecklist" sender:nil];
+    Checklist *checklist = _lists[indexPath.row];
+    
+    [self performSegueWithIdentifier:@"ShowChecklist" sender:checklist];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ShowChecklist"]) {
+        ChecklistViewController *controller = segue.destinationViewController;
+        controller.checklist = sender;
+    }
 }
 
 @end
